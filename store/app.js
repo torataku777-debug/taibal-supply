@@ -5,6 +5,18 @@ const products=[
 {id:"higher",name:"Higher Numeric Damage Counter",price:"¥5,480",cat:"TCEVOLUTIONS / DAMAGE COUNTER",desc:"130〜240の高ダメージ帯を6個でカバーするHigh-Count Numeric Counter。",specs:["130–240","6 PCS","6061-T6"],img:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=1200"}
 ];
 const grid=document.querySelector("#product-grid");
-const links=window.TAIBAL_CHECKOUT||{};
-grid.innerHTML=products.map(p=>`<article class="card"><div class="card-media"><img src="${p.img}" alt="${p.name}"><span class="badge">COMING SOON</span></div><div class="card-body"><div class="card-cat">${p.cat}</div><h3>${p.name}</h3><div class="price">${p.price}</div><div class="desc">${p.desc}</div><div class="specs">${p.specs.map(s=>`<span class="spec">${s}</span>`).join("")}</div><button class="buy" data-id="${p.id}" ${links[p.id]?"":"disabled"}>${links[p.id]?"購入する":"COMING SOON"}</button></div></article>`).join("");
-grid.addEventListener("click",e=>{const b=e.target.closest(".buy");if(!b||b.disabled)return;const u=links[b.dataset.id];if(u)location.href=u;});
+const cfg=window.TAIBAL_CHECKOUT||{};
+const testMode=cfg.mode==="test" && new URLSearchParams(location.search).get("test")==="1";
+const checkoutEnabled=cfg.enabled===true || testMode;
+grid.innerHTML=products.map(p=>{
+  const hasLink=Boolean(cfg[p.id]);
+  const enabled=checkoutEnabled && hasLink;
+  const label=testMode&&hasLink?"TEST CHECKOUT":enabled?"購入する":"COMING SOON";
+  return `<article class="card"><div class="card-media"><img src="${p.img}" alt="${p.name}"><span class="badge">${testMode?"SANDBOX":"COMING SOON"}</span></div><div class="card-body"><div class="card-cat">${p.cat}</div><h3>${p.name}</h3><div class="price">${p.price}</div><div class="desc">${p.desc}</div><div class="specs">${p.specs.map(s=>`<span class="spec">${s}</span>`).join("")}</div><button class="buy" data-id="${p.id}" ${enabled?"":"disabled"}>${label}</button></div></article>`;
+}).join("");
+grid.addEventListener("click",e=>{
+  const b=e.target.closest(".buy");
+  if(!b||b.disabled)return;
+  const u=cfg[b.dataset.id];
+  if(u)location.href=u;
+});
