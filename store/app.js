@@ -104,7 +104,7 @@ function renderMedia(media){
 function renderProduct(p){
   const hasLink=Boolean(cfg[p.id]);
   const enabled=checkoutEnabled && hasLink;
-  const buttonLabel=testMode&&hasLink?"テスト決済へ":enabled?"購入する":"販売開始前";
+  const buttonLabel=testMode&&hasLink?"テスト決済へ":enabled?"購入する":"2026年10月販売予定";
   return `<article class="card">
     <div class="card-media precise-media">
       ${renderMedia(p.media)}
@@ -117,6 +117,10 @@ function renderProduct(p){
       <h3>${p.jpName}</h3>
       <div class="en-name">${p.enName}</div>
       <div class="price">${p.price}<span>（税込）</span></div>
+      <div class="card-actions card-actions-primary">
+        <a class="detail-link" href="${p.detailUrl}${testMode?"?test=1":""}">詳しく見る</a>
+        <button class="buy" data-id="${p.id}" ${enabled?"":"disabled"}>${buttonLabel}</button>
+      </div>
       <p class="product-lead">${p.lead}</p>
       <div class="desc">${p.desc}</div>
       <div class="contents-box">
@@ -124,10 +128,6 @@ function renderProduct(p){
         <ul>${p.contents.map(x=>`<li>${x}</li>`).join("")}</ul>
       </div>
       <div class="specs">${p.specs.map(s=>`<span class="spec">${s}</span>`).join("")}</div>
-      <div class="card-actions">
-        <a class="detail-link" href="${p.detailUrl}${testMode?"?test=1":""}">詳しく見る</a>
-        <button class="buy" data-id="${p.id}" ${enabled?"":"disabled"}>${buttonLabel}</button>
-      </div>
     </div>
   </article>`;
 }
