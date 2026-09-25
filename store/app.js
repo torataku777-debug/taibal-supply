@@ -1,0 +1,10 @@
+const products=[
+{id:"damageFull",name:"Damage Counter Full Set",price:"¥10,480",cat:"TCEVOLUTIONS / DAMAGE MANAGEMENT",desc:"Lower + Higherを同色で揃え、10〜240までを一式でカバー。",specs:["10–240","12 PCS","COLOR MATCHED"],img:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_19.jpg?v=1742269932&width=1200"},
+{id:"tournamentFull",name:"Tournament Full Kit",price:"¥15,980",cat:"TCEVOLUTIONS / TOURNAMENT SETUP",desc:"Damage / Ability / Burn / Poisonまで主要な盤面管理をまとめたフルキット。",specs:["DAMAGE","ABILITY","CONDITION"],img:"https://tcevolutions.com/cdn/shop/files/bk-closeup-metal-pokemon-tcg-markers-aluminum-us.jpg?v=1768006715&width=1200"},
+{id:"lower",name:"Lower Numeric Damage Counter",price:"¥5,480",cat:"TCEVOLUTIONS / DAMAGE COUNTER",desc:"10〜120のダメージ帯を6個で管理するCNC加工アルミ製Numeric Damage Counter。",specs:["10–120","6 PCS","CNC ALUMINUM"],img:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_19.jpg?v=1742269932&width=1200"},
+{id:"higher",name:"Higher Numeric Damage Counter",price:"¥5,480",cat:"TCEVOLUTIONS / DAMAGE COUNTER",desc:"130〜240の高ダメージ帯を6個でカバーするHigh-Count Numeric Counter。",specs:["130–240","6 PCS","6061-T6"],img:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=1200"}
+];
+const grid=document.querySelector("#product-grid");
+const links=window.TAIBAL_CHECKOUT||{};
+grid.innerHTML=products.map(p=>`<article class="card"><div class="card-media"><img src="${p.img}" alt="${p.name}"><span class="badge">COMING SOON</span></div><div class="card-body"><div class="card-cat">${p.cat}</div><h3>${p.name}</h3><div class="price">${p.price}</div><div class="desc">${p.desc}</div><div class="specs">${p.specs.map(s=>`<span class="spec">${s}</span>`).join("")}</div><button class="buy" data-id="${p.id}" ${links[p.id]?"":"disabled"}>${links[p.id]?"購入する":"COMING SOON"}</button></div></article>`).join("");
+grid.addEventListener("click",e=>{const b=e.target.closest(".buy");if(!b||b.disabled)return;const u=links[b.dataset.id];if(u)location.href=u;});
