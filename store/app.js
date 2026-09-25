@@ -1,3 +1,10 @@
+const officialImages={
+  lower:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_19.jpg?v=1742269932&width=1200",
+  higher:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=1200",
+  ability:"https://tcevolutions.com/cdn/shop/files/bk-closeup-metal-pokemon-tcg-markers-aluminum-us.jpg?v=1768006715&width=1200",
+  condition:"https://tcevolutions.com/cdn/shop/files/7B2783A1-62B4-43B6-96C0-BC7A64C24586.png?v=1782411405&width=1200"
+};
+
 const recommendedProducts=[
   {
     id:"damageFull",
@@ -8,12 +15,15 @@ const recommendedProducts=[
     lead:"10〜240までを、これひとつで。",
     desc:"LowerとHigherをまとめた、TCEを初めて使う方におすすめの基本セット。",
     contents:[
-      "ローダメージ ダメージカウンターセット × 1",
-      "ハイダメージ ダメージカウンターセット × 1",
+      "ローダメージ ダメージカウンターセット × 1（6個）",
+      "ハイダメージ ダメージカウンターセット × 1（6個）",
       "合計12個"
     ],
-    specs:["10〜240対応","12個セット","基本構成"],
-    img:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_19.jpg?v=1742269932&width=1200"
+    specs:["10〜240対応","12個セット","Lower + Higher"],
+    media:[
+      {src:officialImages.lower,label:"Lower",count:"6個"},
+      {src:officialImages.higher,label:"Higher",count:"6個"}
+    ]
   },
   {
     id:"tournamentFull",
@@ -24,13 +34,18 @@ const recommendedProducts=[
     lead:"競技プレイに必要な盤面管理を、まとめて一式。",
     desc:"ダメージ管理だけでなく、Ability Used、Burn / Poisonまでまとめて揃えられるフルキット。",
     contents:[
-      "ローダメージ ダメージカウンターセット × 1",
-      "ハイダメージ ダメージカウンターセット × 1",
-      "Ability Used Marker Set × 1",
-      "Burn & Poison Marker Set × 1"
+      "ローダメージ ダメージカウンターセット × 1（6個）",
+      "ハイダメージ ダメージカウンターセット × 1（6個）",
+      "Ability Used Marker Set × 1（2枚）",
+      "Burn & Poison Marker Set × 1（2枚）"
     ],
-    specs:["ダメージ管理","Ability Used","Burn / Poison"],
-    img:"https://tcevolutions.com/cdn/shop/files/bk-closeup-metal-pokemon-tcg-markers-aluminum-us.jpg?v=1768006715&width=1200"
+    specs:["Damage","Ability Used","Burn / Poison"],
+    media:[
+      {src:officialImages.lower,label:"Lower",count:"6個"},
+      {src:officialImages.higher,label:"Higher",count:"6個"},
+      {src:officialImages.ability,label:"Ability Used",count:"2枚"},
+      {src:officialImages.condition,label:"Burn & Poison",count:"2枚"}
+    ]
   }
 ];
 
@@ -43,9 +58,13 @@ const singleProducts=[
     cat:"単品 / 低ダメージ帯",
     lead:"10〜120のダメージ管理を、より見やすく。",
     desc:"10〜120のダメージ帯を管理するNumeric Damage Counter 6個セット。",
-    contents:["Lower Numeric Damage Counter × 6"],
+    contents:[
+      "10〜60用 12mmカウンター × 4",
+      "70〜120用 13mmカウンター × 2",
+      "合計6個"
+    ],
     specs:["10〜120対応","6個セット","CNC加工アルミ"],
-    img:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_19.jpg?v=1742269932&width=1200"
+    media:[{src:officialImages.lower,label:"Lower Numeric Damage Counter",count:"6個"}]
   },
   {
     id:"higher",
@@ -55,9 +74,13 @@ const singleProducts=[
     cat:"単品 / 高ダメージ帯",
     lead:"130〜240の高ダメージ帯にも、スマートに対応。",
     desc:"130〜240の高ダメージ帯を管理するNumeric Damage Counter 6個セット。",
-    contents:["Higher Numeric Damage Counter × 6"],
-    specs:["130〜240対応","6個セット","CNC加工アルミ"],
-    img:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=1200"
+    contents:[
+      "130〜180用 13mmカウンター × 4",
+      "190〜240用 14mmカウンター × 2",
+      "合計6個"
+    ],
+    specs:["130〜240対応","6個セット","6061-T6アルミ"],
+    media:[{src:officialImages.higher,label:"Higher Numeric Damage Counter",count:"6個"}]
   }
 ];
 
@@ -65,14 +88,24 @@ const cfg=window.TAIBAL_CHECKOUT||{};
 const testMode=cfg.mode==="test" && new URLSearchParams(location.search).get("test")==="1";
 const checkoutEnabled=cfg.enabled===true || testMode;
 
+function renderMedia(media){
+  const cls=media.length===1?"actual-product-grid single":media.length===2?"actual-product-grid double":"actual-product-grid quad";
+  return `<div class="${cls}">${media.map(m=>`
+    <figure class="actual-product">
+      <div class="actual-image-wrap"><img src="${m.src}" alt="${m.label} actual TCEvolutions product"></div>
+      <figcaption><b>${m.label}</b><span>${m.count}</span></figcaption>
+    </figure>`).join("")}</div>`;
+}
+
 function renderProduct(p){
   const hasLink=Boolean(cfg[p.id]);
   const enabled=checkoutEnabled && hasLink;
   const buttonLabel=testMode&&hasLink?"テスト決済へ":enabled?"購入する":"販売開始前";
   return `<article class="card">
-    <div class="card-media">
-      <img src="${p.img}" alt="${p.jpName}">
+    <div class="card-media precise-media">
+      ${renderMedia(p.media)}
       <span class="badge">${testMode?"SANDBOX":"COMING SOON"}</span>
+      <span class="official-photo-tag">TCE公式商品写真</span>
     </div>
     <div class="card-body">
       <div class="card-cat">${p.cat}</div>
