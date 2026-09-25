@@ -7,7 +7,7 @@ const officialImages={
 
 const recommendedProducts=[
   {
-    id:"damageFull",
+    id:"damageFull",detailUrl:"./products/damage-full.html",
     jpName:"ダメージカウンター フルセット",
     enName:"Damage Counter Full Set",
     price:"¥10,480",
@@ -27,7 +27,7 @@ const recommendedProducts=[
     ]
   },
   {
-    id:"tournamentFull",
+    id:"tournamentFull",detailUrl:"./products/tournament-full.html",
     jpName:"トーナメント フルキット",
     enName:"Tournament Full Kit",
     price:"¥15,980",
@@ -53,7 +53,7 @@ const recommendedProducts=[
 
 const singleProducts=[
   {
-    id:"lower",
+    id:"lower",detailUrl:"./products/lower.html",
     jpName:"ローダメージ ダメージカウンターセット",
     enName:"Lower Numeric Damage Counter Set",
     price:"¥5,480",
@@ -70,7 +70,7 @@ const singleProducts=[
     media:[{src:officialImages.lower,label:"Lower Numeric Damage Counter",count:"6個"}]
   },
   {
-    id:"higher",
+    id:"higher",detailUrl:"./products/higher.html",
     jpName:"ハイダメージ ダメージカウンターセット",
     enName:"Higher Numeric Damage Counter Set",
     price:"¥5,480",
@@ -124,7 +124,10 @@ function renderProduct(p){
         <ul>${p.contents.map(x=>`<li>${x}</li>`).join("")}</ul>
       </div>
       <div class="specs">${p.specs.map(s=>`<span class="spec">${s}</span>`).join("")}</div>
-      <button class="buy" data-id="${p.id}" ${enabled?"":"disabled"}>${buttonLabel}</button>
+      <div class="card-actions">
+        <a class="detail-link" href="${p.detailUrl}${testMode?"?test=1":""}">詳しく見る</a>
+        <button class="buy" data-id="${p.id}" ${enabled?"":"disabled"}>${buttonLabel}</button>
+      </div>
     </div>
   </article>`;
 }
