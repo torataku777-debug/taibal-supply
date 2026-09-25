@@ -108,7 +108,7 @@ function renderProduct(p){
   return `<article class="card">
     <div class="card-media precise-media">
       ${renderMedia(p.media)}
-      <span class="badge">${testMode?"SANDBOX":"COMING SOON"}</span>
+      <span class="badge">${testMode?"テスト環境":"初回入荷準備中"}</span>
       <span class="official-photo-tag">TCE公式商品写真</span>
       <div class="set-visual-summary">${p.visualSummary}</div>
     </div>
