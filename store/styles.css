@@ -164,3 +164,10 @@ footer{background:var(--black);color:#d7cfbf;padding:58px 0}
 .actual-product-grid.quad .actual-product{
   box-shadow:0 5px 16px rgba(24,22,17,.04);
 }
+
+.origin-timeline{margin-top:34px;border-top:1px solid var(--line)}
+.origin-timeline article{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.origin-timeline article>span{font-family:Georgia,serif;color:var(--gold-dark);font-size:17px}
+.origin-timeline b{font-size:14px}
+.origin-timeline p{margin:5px 0 0;font-size:12px;color:#625c52}
+.badge{letter-spacing:.03em;font-weight:700}
