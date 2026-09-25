@@ -1,5 +1,5 @@
 const officialImages={
-  lower:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_19.jpg?v=1742269932&width=1200",
+  lower:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_3.jpg?v=1742269932&width=1200",
   higher:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=1200",
   ability:"https://tcevolutions.com/cdn/shop/files/bk-closeup-metal-pokemon-tcg-markers-aluminum-us.jpg?v=1768006715&width=1200",
   condition:"https://tcevolutions.com/cdn/shop/files/7B2783A1-62B4-43B6-96C0-BC7A64C24586.png?v=1782411405&width=1200"
@@ -20,9 +20,10 @@ const recommendedProducts=[
       "合計12個"
     ],
     specs:["10〜240対応","12個セット","Lower + Higher"],
+    visualSummary:"Lower 6個 + Higher 6個 = 合計12個",
     media:[
-      {src:officialImages.lower,label:"Lower",count:"6個"},
-      {src:officialImages.higher,label:"Higher",count:"6個"}
+      {src:officialImages.lower,label:"ローダメージ",count:"6個"},
+      {src:officialImages.higher,label:"ハイダメージ",count:"6個"}
     ]
   },
   {
@@ -40,9 +41,10 @@ const recommendedProducts=[
       "Burn & Poison Marker Set × 1（2枚）"
     ],
     specs:["Damage","Ability Used","Burn / Poison"],
+    visualSummary:"Lower 6個 + Higher 6個 + Ability 2枚 + Burn / Poison 2枚",
     media:[
-      {src:officialImages.lower,label:"Lower",count:"6個"},
-      {src:officialImages.higher,label:"Higher",count:"6個"},
+      {src:officialImages.lower,label:"ローダメージ",count:"6個"},
+      {src:officialImages.higher,label:"ハイダメージ",count:"6個"},
       {src:officialImages.ability,label:"Ability Used",count:"2枚"},
       {src:officialImages.condition,label:"Burn & Poison",count:"2枚"}
     ]
@@ -64,6 +66,7 @@ const singleProducts=[
       "合計6個"
     ],
     specs:["10〜120対応","6個セット","CNC加工アルミ"],
+    visualSummary:"10〜120対応 / 6個セット",
     media:[{src:officialImages.lower,label:"Lower Numeric Damage Counter",count:"6個"}]
   },
   {
@@ -80,6 +83,7 @@ const singleProducts=[
       "合計6個"
     ],
     specs:["130〜240対応","6個セット","6061-T6アルミ"],
+    visualSummary:"130〜240対応 / 6個セット",
     media:[{src:officialImages.higher,label:"Higher Numeric Damage Counter",count:"6個"}]
   }
 ];
@@ -106,6 +110,7 @@ function renderProduct(p){
       ${renderMedia(p.media)}
       <span class="badge">${testMode?"SANDBOX":"COMING SOON"}</span>
       <span class="official-photo-tag">TCE公式商品写真</span>
+      <div class="set-visual-summary">${p.visualSummary}</div>
     </div>
     <div class="card-body">
       <div class="card-cat">${p.cat}</div>
