@@ -226,3 +226,20 @@ footer{background:var(--black);color:#d7cfbf;padding:58px 0}
 @media(max-width:580px){
   .detail-title{font-size:34px}
 }
+
+.mobile-buybar{display:none}
+@media(max-width:580px){
+  body{padding-bottom:84px}
+  .mobile-buybar{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    display:grid;grid-template-columns:1fr 128px;gap:10px;
+    align-items:center;padding:10px 12px;
+    background:rgba(17,17,15,.96);backdrop-filter:blur(10px);
+    border-top:1px solid rgba(255,255,255,.12);color:#f3eee4;
+  }
+  .mobile-buybar-info{min-width:0;display:flex;flex-direction:column}
+  .mobile-buybar-info span{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#cfc6b4}
+  .mobile-buybar-info b{font-size:18px}
+  .mobile-buybar button{height:46px;border:0;background:#c9b77d;color:#15130f;font-weight:800;font-size:12px}
+  .mobile-buybar button:disabled{background:#5e5a52;color:#cfc7b8}
+}
