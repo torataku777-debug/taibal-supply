@@ -243,3 +243,21 @@ footer{background:var(--black);color:#d7cfbf;padding:58px 0}
   .mobile-buybar button{height:46px;border:0;background:#c9b77d;color:#15130f;font-weight:800;font-size:12px}
   .mobile-buybar button:disabled{background:#5e5a52;color:#cfc7b8}
 }
+
+@media(max-width:580px){
+  .hero-grid{min-height:0;gap:8px;padding-bottom:26px}
+  .hero-copy{padding:38px 0 14px}
+  .hero-copy h1{font-size:42px;line-height:1.08;margin-bottom:16px}
+  .hero-copy p{font-size:13px;line-height:1.65}
+  .hero-lead{font-size:17px!important}
+  .hero-actions{margin-top:20px}
+  .hero-actions .button{flex:1;min-width:0;padding:0 10px;font-size:11px}
+  .hero-note{margin-top:14px}
+  .hero-board{margin:0;padding:9px}
+  .hero-real-grid{grid-template-columns:1fr 1fr;gap:7px}
+  .hero-real-large{grid-column:auto}
+  .hero-real img,.hero-real-large img{aspect-ratio:1/1;object-fit:contain}
+  .hero-real figcaption{padding:6px 7px;font-size:9px}
+  .image-note{font-size:8px;padding-top:7px}
+  .recommendation-section{padding-top:58px}
+}
