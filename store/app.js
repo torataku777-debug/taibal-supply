@@ -141,3 +141,9 @@ document.addEventListener("click",e=>{
   const u=cfg[b.dataset.id];
   if(u)location.href=u;
 });
+
+const recommendedSection=document.querySelector("#recommended");
+const heroSection=document.querySelector(".hero");
+if(recommendedSection&&heroSection){
+  heroSection.insertAdjacentElement("afterend",recommendedSection);
+}
