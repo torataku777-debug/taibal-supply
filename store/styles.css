@@ -261,3 +261,5 @@ footer{background:var(--black);color:#d7cfbf;padding:58px 0}
   .image-note{font-size:8px;padding-top:7px}
   .recommendation-section{padding-top:58px}
 }
+
+.card-actions-primary{margin-top:12px;margin-bottom:18px}
