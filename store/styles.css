@@ -149,3 +149,18 @@ footer{background:var(--black);color:#d7cfbf;padding:58px 0}
   .hero-real-grid{grid-template-columns:1fr 1fr}
   .actual-product-grid.double,.actual-product-grid.quad{grid-template-columns:1fr 1fr}
 }
+
+.set-visual-summary{
+  margin-top:10px;
+  padding:10px 12px;
+  background:#171611;
+  color:#f0e8da;
+  font-size:11px;
+  font-weight:700;
+  text-align:center;
+  letter-spacing:.02em;
+}
+.actual-product-grid.double .actual-product,
+.actual-product-grid.quad .actual-product{
+  box-shadow:0 5px 16px rgba(24,22,17,.04);
+}
