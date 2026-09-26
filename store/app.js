@@ -97,6 +97,19 @@
     } else if (target.matches('[data-add-pair]')) {
       if (cart.lower >= model.MAX_QUANTITY || cart.higher >= model.MAX_QUANTITY) { announce('1種類につき99点まで追加できます。'); return; }
       cart.lower++; cart.higher++; save(); render(); announce('2種類を各1点追加しました。');
+    } else if (target.matches('[data-add-bundle]')) {
+      const bundles = {
+        damage: ['lower','higher'],
+        marker: ['ability','condition'],
+        tournament: ['lower','higher','ability','condition']
+      };
+      const ids = bundles[target.dataset.addBundle];
+      if (!ids) return;
+      if (ids.some(id => cart[id] >= model.MAX_QUANTITY)) { announce('1種類につき99点まで追加できます。'); return; }
+      ids.forEach(id => { cart[id]++; });
+      save(); render();
+      const names = target.dataset.addBundle === 'damage' ? 'ダメージ2種類' : target.dataset.addBundle === 'marker' ? 'マーカー2種類' : '4種類セット';
+      announce(names + 'を各1点カートに追加しました。');
     } else if (target.matches('[data-change],[data-remove]')) {
       const id = target.dataset.change || target.dataset.remove;
       if (!Object.hasOwn(products, id)) return;
