@@ -53,8 +53,8 @@
     $('[data-cart-offer]').innerHTML=active+suggestions;
     $('[data-subtotal]').textContent=money(state.subtotal);$('[data-discount-row]').hidden=!state.discount;$('[data-discount]').textContent='−'+money(state.discount);
     $('[data-pairs]').textContent='カラーが異なる組み合わせも対象';$('[data-total]').textContent=money(state.total);
-    const shipping=state.count?(cart.case?750:350):0;
-    if($('[data-shipping-estimate]'))$('[data-shipping-estimate]').textContent=money(shipping);
+    const shipping=state.count && state.total<10000?350:0;
+    if($('[data-shipping-estimate]'))$('[data-shipping-estimate]').textContent=shipping?money(shipping):'無料';
     if($('[data-estimated-total]'))$('[data-estimated-total]').textContent=money(state.total+shipping);
     $('[data-checkout]').hidden=true;$('[data-checkout]').removeAttribute('href');$('[data-launch-note]').hidden=false;
     const unselected=state.lines.some(l=>model.hasColors(l.id)&&!l.color);
