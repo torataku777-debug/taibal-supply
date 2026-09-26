@@ -32,7 +32,7 @@
     $('[data-toast]').hidden = false;
     toastTimer = setTimeout(() => { $('[data-toast]').hidden = true; }, 3500);
   }
-  function render() {
+  function render(preserveItems = false) {
     const state = model.calculate(cart);
     document.querySelectorAll('[data-cart-count]').forEach(el => { el.textContent = state.count; });
     $('[data-cart-dock]').hidden = !state.count;
@@ -41,10 +41,16 @@
     $('[data-dock-discount]').textContent = state.discount ? money(state.discount) + 'の割引を適用済み・税込' : '税込・送料別';
     $('[data-cart-empty]').hidden = Boolean(state.count);
     $('[data-cart-content]').hidden = !state.count;
-    $('[data-cart-items]').innerHTML = Object.entries(cart).filter(([,q]) => q > 0).map(([id,q]) => {
+    if (!preserveItems) $('[data-cart-items]').innerHTML = Object.entries(cart).filter(([,q]) => q > 0).map(([id,q]) => {
       const p = products[id];
-      return `<article class="cart-item"><img src="${p.image}" alt="${p.name}" width="88" height="88"><div><h3>${p.name}</h3><p class="item-meta">6個入り / ${money(p.price)}（税込）</p><div class="cart-item-controls"><div class="quantity"><button data-change="${id}" data-delta="-1" aria-label="${p.name}を1点減らす">−</button><input type="number" inputmode="numeric" min="1" max="${model.MAX_QUANTITY}" step="1" value="${q}" data-quantity="${id}" aria-label="${p.name}の数量"><button data-change="${id}" data-delta="1" aria-label="${p.name}を1点増やす" ${q >= model.MAX_QUANTITY ? 'disabled' : ''}>＋</button></div><strong class="item-total">${money(p.price*q)}</strong></div><button class="remove-button" data-remove="${id}" aria-label="${p.name}をカートから削除">削除</button></div></article>`;
+      return `<article class="cart-item"><img src="${p.image}" alt="${p.name}" width="88" height="88"><div><h3>${p.name}</h3><p class="item-meta">6個入り / ${money(p.price)}（税込）</p><div class="cart-item-controls"><div class="quantity"><button data-change="${id}" data-delta="-1" aria-label="${p.name}を1点減らす">−</button><input type="number" inputmode="numeric" min="1" max="${model.MAX_QUANTITY}" step="1" value="${q}" data-quantity="${id}" aria-label="${p.name}の数量"><button data-change="${id}" data-delta="1" aria-label="${p.name}を1点増やす" ${q >= model.MAX_QUANTITY ? 'disabled' : ''}>＋</button></div><strong class="item-total" data-item-total="${id}">${money(p.price*q)}</strong></div><button class="remove-button" data-remove="${id}" aria-label="${p.name}をカートから削除">削除</button></div></article>`;
     }).join('');
+    for (const id of Object.keys(products)) {
+      const total = dialog.querySelector(`[data-item-total="${id}"]`);
+      if (total) total.textContent = money(cart[id] * products[id].price);
+      const plus = dialog.querySelector(`[data-change="${id}"][data-delta="1"]`);
+      if (plus) plus.disabled = cart[id] >= model.MAX_QUANTITY;
+    }
     const missing = cart.lower > cart.higher ? 'higher' : cart.higher > cart.lower ? 'lower' : null;
     const offer = $('[data-cart-offer]');
     const active = state.discount ? `<strong>まとめ買い割引 −${money(state.discount)}</strong><p>ローダメージ＋ハイダメージ ${state.pairs}組に適用しました。</p>` : '<strong>2種類を一緒に選ぶと、480円引き。</strong><p>ローダメージ・ハイダメージ各1点で適用されます。同じ種類だけの購入は対象外です。</p>';
@@ -98,6 +104,14 @@
       (next && !next.disabled ? next : dialog.querySelector(`[data-quantity="${id}"]`) || $('[data-cart-close]')).focus();
     }
   });
+  dialog.addEventListener('input', event => {
+    const input = event.target.closest('[data-quantity]');
+    if (!input || !Object.hasOwn(products, input.dataset.quantity)) return;
+    const value = Number(input.value);
+    if (!Number.isInteger(value) || value < 1 || value > model.MAX_QUANTITY) return;
+    cart[input.dataset.quantity] = value;
+    save(); render(true);
+  });
   dialog.addEventListener('change', event => {
     const input = event.target.closest('[data-quantity]');
     if (!input) return;
@@ -107,7 +121,6 @@
       input.value = cart[id]; announce('数量は1〜99の整数で入力してください。'); return;
     }
     change(id,value,products[id].name+'の数量を変更しました。');
-    dialog.querySelector(`[data-quantity="${id}"]`)?.focus();
   });
   dialog.addEventListener('click',event=>{ if(event.target===dialog && event.clientX<dialog.getBoundingClientRect().left)dialog.close(); });
   dialog.addEventListener('close',()=>{document.body.classList.remove('cart-open');returnFocus?.focus();});
