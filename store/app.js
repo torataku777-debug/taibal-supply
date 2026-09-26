@@ -67,7 +67,7 @@ const singleProducts=[
     ],
     specs:["10〜120対応","6個セット","CNC加工アルミ"],
     visualSummary:"10〜120対応 / 6個セット",
-    media:[{src:officialImages.lower,label:"Lower Numeric Damage Counter",count:"6個"}]
+    media:[{src:officialImages.lower,label:"ローダメージ",count:"6個"}]
   },
   {
     id:"higher",detailUrl:"./products/higher.html",
@@ -84,7 +84,7 @@ const singleProducts=[
     ],
     specs:["130〜240対応","6個セット","6061-T6アルミ"],
     visualSummary:"130〜240対応 / 6個セット",
-    media:[{src:officialImages.higher,label:"Higher Numeric Damage Counter",count:"6個"}]
+    media:[{src:officialImages.higher,label:"ハイダメージ",count:"6個"}]
   }
 ];
 
@@ -96,7 +96,7 @@ function renderMedia(media){
   const cls=media.length===1?"actual-product-grid single":media.length===2?"actual-product-grid double":"actual-product-grid quad";
   return `<div class="${cls}">${media.map(m=>`
     <figure class="actual-product">
-      <div class="actual-image-wrap"><img src="${m.src}" alt="${m.label} actual TCEvolutions product"></div>
+      <div class="actual-image-wrap"><img src="${m.src}" alt="TCEvolutions公式写真：${m.label}"></div>
       <figcaption><b>${m.label}</b><span>${m.count}</span></figcaption>
     </figure>`).join("")}</div>`;
 }
@@ -104,30 +104,26 @@ function renderMedia(media){
 function renderProduct(p){
   const hasLink=Boolean(cfg[p.id]);
   const enabled=checkoutEnabled && hasLink;
-  const buttonLabel=testMode&&hasLink?"テスト決済へ":enabled?"購入する":"2026年10月販売予定";
-  return `<article class="card">
+  const buttonLabel=testMode&&hasLink?"テスト決済へ":"購入する";
+  return `<article class="card shop-card">
     <div class="card-media precise-media">
       ${renderMedia(p.media)}
-      <span class="badge">${testMode?"テスト環境":"初回入荷準備中"}</span>
-      <span class="official-photo-tag">TCE公式商品写真</span>
-      <div class="set-visual-summary">${p.visualSummary}</div>
+      <span class="badge">${testMode?"テスト環境":"10月入荷予定"}</span>
     </div>
     <div class="card-body">
       <div class="card-cat">${p.cat}</div>
       <h3>${p.jpName}</h3>
-      <div class="en-name">${p.enName}</div>
-      <div class="price">${p.price}<span>（税込）</span></div>
-      <div class="card-actions card-actions-primary">
-        <a class="detail-link" href="${p.detailUrl}${testMode?"?test=1":""}">詳しく見る</a>
-        <button class="buy" data-id="${p.id}" ${enabled?"":"disabled"}>${buttonLabel}</button>
-      </div>
       <p class="product-lead">${p.lead}</p>
-      <div class="desc">${p.desc}</div>
+      <div class="price">${p.price}<span>税込</span></div>
       <div class="contents-box">
-        <b>セット内容</b>
+        <b>入っているもの</b>
         <ul>${p.contents.map(x=>`<li>${x}</li>`).join("")}</ul>
       </div>
-      <div class="specs">${p.specs.map(s=>`<span class="spec">${s}</span>`).join("")}</div>
+      <div class="card-actions card-actions-primary ${enabled?"":"prelaunch"}">
+        <a class="detail-link" href="${p.detailUrl}${testMode?"?test=1":""}">商品内容を詳しく見る <span aria-hidden="true">→</span></a>
+        ${enabled?`<button class="buy" data-id="${p.id}">${buttonLabel}</button>`:""}
+      </div>
+      ${enabled?"":'<p class="availability">カラー・発売日は入荷確認後にご案内します。</p>'}
     </div>
   </article>`;
 }
@@ -141,9 +137,3 @@ document.addEventListener("click",e=>{
   const u=cfg[b.dataset.id];
   if(u)location.href=u;
 });
-
-const recommendedSection=document.querySelector("#recommended");
-const heroSection=document.querySelector(".hero");
-if(recommendedSection&&heroSection){
-  heroSection.insertAdjacentElement("afterend",recommendedSection);
-}
