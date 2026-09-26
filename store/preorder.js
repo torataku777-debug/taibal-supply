@@ -2,8 +2,12 @@
   document.querySelector('[data-preorder]')?.addEventListener('click', event => {
     const link = event.currentTarget;
     const url = new URL(link.href);
-    const color = document.querySelector('input[name="product-color"]:checked');
-    if (color) url.searchParams.set('color', color.value);
+    const photo = document.querySelector('.detail-photo .product-color-image');
+    const color = photo?.dataset.displayColor;
+    if (color) {
+      document.querySelector('.color-picker')?.dispatchEvent(new CustomEvent('colorcommit',{detail:{color}}));
+      url.searchParams.set('color', color);
+    }
     link.href = url.href;
   });
   const form = document.querySelector('[data-preorder-form]');

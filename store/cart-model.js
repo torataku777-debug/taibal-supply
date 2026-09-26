@@ -57,5 +57,49 @@
     } catch {}
     return null;
   }
-  return Object.freeze({ products, MAX_QUANTITY, normalize, calculate, checkoutKey, checkoutUrl });
+  const colors = Object.freeze({blue:'ブルー',cyan:'シアン',gold:'ゴールド',green:'グリーン',gunmetal:'ガンメタル',magenta:'マゼンタ',orange:'オレンジ',purple:'パープル',red:'レッド',silver:'シルバー'});
+  const hasColors = id => id === 'lower' || id === 'higher';
+  const lineKey = line => line.id + ':' + (line.color || 'unselected');
+  function normalizeLines(raw) {
+    // Legacy carts had quantities only. Keep them explicitly unselected.
+    const source = Array.isArray(raw) ? raw : Object.entries(normalize(raw)).map(([id,qty])=>({id,color:'',quantity:qty}));
+    const lines = [], totals = normalize({});
+    for (const item of source) {
+      if (!item || !Object.hasOwn(products,item.id)) continue;
+      const color = hasColors(item.id) && Object.hasOwn(colors,item.color) ? item.color : '';
+      const qty = Math.min(quantity(item.quantity),MAX_QUANTITY-totals[item.id]);
+      if (!qty) continue;
+      totals[item.id]+=qty;
+      const line={id:item.id,color,quantity:qty};
+      const existing=lines.find(x=>lineKey(x)===lineKey(line));
+      if(existing)existing.quantity+=qty;else lines.push(line);
+    }
+    return lines;
+  }
+  function calculateLines(raw) {
+    const lines=normalizeLines(raw), totals=normalize({});
+    lines.forEach(line=>{totals[line.id]+=line.quantity;});
+    return {...calculate(totals),lines};
+  }
+  function addLine(raw,id,color='',qty=1) {
+    if(!Object.hasOwn(products,id))return normalizeLines(raw);
+    return normalizeLines([...normalizeLines(raw),{id,color,quantity:qty}]);
+  }
+  function setLineQuantity(raw,key,qty) {
+    return normalizeLines(normalizeLines(raw).map(line=>lineKey(line)===key?{...line,quantity:qty}:line));
+  }
+  function setLineColor(raw,key,color) {
+    if(color!==''&&!Object.hasOwn(colors,color))return normalizeLines(raw);
+    return normalizeLines(normalizeLines(raw).map(line=>lineKey(line)===key?{...line,color}:line));
+  }
+  function lineImage(line) {
+    if(!hasColors(line.id)||!line.color)return products[line.id].image;
+    return products[line.id].image.replace('_blue.', '_'+line.color+'.');
+  }
+  function lineName(line) {
+    return products[line.id].name+(hasColors(line.id)?'・'+(colors[line.color]||'カラー未選択'):'');
+  }
+  // Existing Payment Links do not carry line-item colors. Keep variant checkout closed.
+  function checkoutLinesUrl() { return null; }
+  return Object.freeze({ products, MAX_QUANTITY, normalize, calculate, checkoutKey, checkoutUrl, colors, hasColors, lineKey, normalizeLines, calculateLines, addLine, setLineQuantity, setLineColor, lineImage, lineName, checkoutLinesUrl });
 });
