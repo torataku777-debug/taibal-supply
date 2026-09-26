@@ -120,6 +120,8 @@ footer{padding-block:48px 110px;background:#191919;color:#efede8}.footer-grid{di
   .preorder-page input,.preorder-page select,.preorder-page textarea{font-size:16px;min-height:48px}
   .preorder-page h1{font-size:30px;line-height:1.5}
   .story-chapters a{display:inline-flex;align-items:center;min-height:44px;font-size:12px}
+  .story-page h1{font-size:clamp(23px,6.3vw,28px);letter-spacing:.01em;line-height:1.7}
+  .story-page .story-intro{font-size:18px;line-height:1.9}
   .story-chapter{padding-left:32px}
   .story-chapter h2{line-height:1.65}
   .faq-grid summary{font-size:14px;min-height:48px}
