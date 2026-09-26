@@ -208,3 +208,63 @@ footer{padding-block:48px 110px;background:#191919;color:#efede8}.footer-grid{di
 }
 
 @media(max-width:760px){.bundle-price-row .bundle-original{flex-basis:100%;line-height:1.3}.bundle-price-row{gap:2px 10px}.bundle-offers h3{font-size:20px}.bundle-offer-grid{gap:10px}.bundle-offer-grid article+article{padding-top:10px}.bundle-offers-footer{margin-top:12px;padding-top:10px}}
+
+/* Quiet material palette: ivory, charcoal and restrained champagne metal.
+   Preserve all existing layout dimensions and responsive composition. */
+:root{--ink:#24231f;--muted:#696459;--green:#252522;--pale:#efebe3;--cream:#f5f2eb;--line:#d9d2c6;--white:#fcfbf8;--metal:#917449}
+body{background:#f8f6f1;color:var(--ink)}
+::selection{background:#d7c5a3;color:#23211d}
+.announcement{background:#242521;color:#f4eee2;box-shadow:inset 0 -1px #c9b38830}
+.announcement span{color:#c7bda9}
+.site-header{background:#faf8f3f2;border-bottom-color:#bba98a45;box-shadow:0 3px 18px #25221b05}
+.brand{color:#242521}
+.brand span{color:#806b4e}
+.nav nav a{color:#504a40}
+.cart-trigger>span{background:#2b2b26;color:#f8f2e7}
+.eyebrow,.product-brand,.story-chapter>.eyebrow{color:#806747}
+.hero .eyebrow{color:#786449}
+.hero h1,.section-heading h2,.story-grid h2,.story-page h1,.story-page h2{color:#292820}
+.hero-description,.product-descriptor,.purchase-note{color:#686052}
+.button,.detail-copy .preorder-link+.add-button{
+ background:linear-gradient(115deg,#353630 0%,#252621 55%,#1c1e1a 100%);
+ color:#faf5e9;border-color:#9b875e;
+ box-shadow:inset 0 1px #f3e1b52e,inset 0 -1px #0003,0 5px 12px -8px #27231666;
+}
+.button>span{color:#d8c49e}
+.detail-copy .preorder-link{background:transparent;border:0;color:var(--ink);box-shadow:none}
+.detail-link,.bundle-cart{border-bottom-color:#9b875e}
+.photo-label{color:#615744}
+.shop-photo,.detail-photo{
+ background:radial-gradient(ellipse at 35% 10%,#faf8f3,#e9e3d7);
+ box-shadow:inset 0 0 0 1px #a5916b19,0 6px 18px -14px #30271b80;
+}
+.coming-badge{background:#2c2e27ed;color:#eee1c6;box-shadow:inset 0 0 0 1px #c8b48a40,0 2px 8px #00000012}
+.product-disclosure{border-color:#d9d2c6}
+.product-disclosure summary{color:#615b4f}
+.price,.reference-price>strong,.detail-price{color:#292820}
+.benefit-strip{background:linear-gradient(110deg,#20231f,#30352c);box-shadow:inset 0 1px #c8b48a30,inset 0 -1px #c8b48a25}
+.benefit-index{color:#c4ad83}
+.benefit-grid>div+div{border-color:#bdaa842e}
+.bundle-offers,.bundle-note{background:radial-gradient(ellipse at 0 0,#414238 0%,#292c25 48%,#20231e 100%);box-shadow:inset 0 1px #d9c7a245,0 12px 24px -20px #26231c66;color:#f9f4e9}
+.bundle-offers .eyebrow,.bundle-offers .bundle-price-row .bundle-original{color:#d0c3aa}
+.bundle-price-row .bundle-discount{background:linear-gradient(110deg,#dfcda8,#cbb58b);color:#302b20;box-shadow:inset 0 1px #fff5}
+.bundle-offers .small,.bundle-offers-footer p{color:#d1cbbf}
+.bundle-offer-grid article+article,.bundle-offers-footer{border-color:#c4b59030}
+.craft-section{background:#eeeae1}
+.story-year{color:#b0a18a}
+.story-preview-photo img,.story-editorial-photo img{box-shadow:0 9px 23px -17px #31291d66}
+.story-chapters a[aria-current]{box-shadow:0 2px #9b8052}
+.story-feature-photo figcaption,.story-counter-photo figcaption{background:#f8f6f1}
+.chapter-number{color:#9e8a68}
+.launch-note,.cart-offer{background:#ede9df}
+.cart-dialog,.cart-header,.cart-dock{background:#fcfbf7}
+.cart-dock{border-color:#d7cbb6;box-shadow:0 5px 25px #2c271b18}
+.cart-color-label select,.preorder-page select,.preorder-page input,.preorder-page textarea{background:#fffefa;border-color:#cfc5b4}
+footer{background:#efebe3;border-color:#d7cdbb}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline-color:#8b7042}
+@media(hover:hover){
+ .button:hover,.detail-copy .preorder-link+.add-button:hover{background:linear-gradient(115deg,#48493c,#303428);border-color:#c0a677;color:#fffaf0}
+ .detail-copy .preorder-link:hover{background:transparent;color:#806747}
+ .shop-photo:hover{box-shadow:inset 0 0 0 1px #a5916b30,0 8px 20px -13px #30271b55}
+ .detail-link:hover,.nav nav a:hover{color:#806747;opacity:1}
+}
