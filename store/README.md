@@ -1,30 +1,25 @@
-# TAIBAL SUPPLY Store
-Consumer-facing storefront for TAIBAL SUPPLY.
+# TAIBAL SUPPLY storefront
 
-## Current status
-- TCEvolutions First Drop landing/storefront
-- Four initial SKUs
-- Four Stripe test Payment Links are connected. Test checkout is available with `?test=1`; public purchase buttons remain disabled while inventory, product colors, legal details, and live Stripe verification are pending.
-- Existing B2B GitHub Pages site remains unchanged at repository root
+Hosted on the existing GitHub Pages site at `/store/`. The root B2B site is separate.
 
-## Enable live checkout
-After confirming inventory, colors, shipping and return terms, and live Stripe account status, replace all four test links in `store/checkout-config.js` with live Payment Links, set `mode` to `live` and `enabled` to `true`. Confirm the SKU names, prices, taxes, shipping collection, and payment methods in Stripe before publishing.
+## Catalog and cart
 
-```js
-window.TAIBAL_CHECKOUT = {
-  mode: "live",
-  enabled: true,
-  lower: "https://buy.stripe.com/...",
-  higher: "https://buy.stripe.com/...",
-  damageFull: "https://buy.stripe.com/...",
-  tournamentFull: "https://buy.stripe.com/..."
-};
-```
+The primary catalog contains lower and higher damage counters, each 6 pieces for JPY 5,480 including tax. Each lower/higher pair receives JPY 480 off. The discount repeats for matched pairs; identical products alone receive no discount. Marker prices are not defined, so markers are preview-only.
 
-Stripe should be configured to enable cards, Apple Pay and PayPay where eligible.
+The cart supports adding, changing quantities, removing, and persistence between pages using localStorage. Public and test carts have separate storage. It does not reserve inventory or place orders. Current status remains pre-launch; live payments are disabled.
 
-## Pre-launch checks
-- Replace TCE reference photography with photos of the actual received items after inventory arrives. Current set layouts show each component separately; they are not photos of the assembled bundle.
-- Finalize color variants
-- Finalize legal disclosure before sales open
-- Add shipping policy and return policy
+## Source and checks
+
+`python scripts/build-store.py` builds the homepage and four detail/legacy pages. Edit the generator rather than the generated HTML. CSS and JavaScript are edited directly.
+
+`node scripts/test-cart.cjs` checks discount arithmetic, quantity normalization and safe checkout routing. `node --check store/app.js` checks UI JavaScript syntax.
+
+`cart-model.js` owns prices and discount rules. Keep it consistent with the page generator and the payment provider. Browser cart prices are display-only and must never be trusted as server-side prices.
+
+## Payment integration
+
+Existing Stripe links remain in `checkout-config.js`. With `?test=1`, only exact matching carts can open these links: one lower, one higher, or one of each (the existing damageFull link). Other quantities cannot use those links because the charged items would differ. The old tournamentFull link is no longer exposed.
+
+A full live cart with arbitrary quantities requires server-created Checkout Sessions or exact preconfigured links for each supported combination. Validate SKUs, quantities, inventory and the pair discount on the server. Do not simply forward a multi-item cart to a single-product link. No new backend or live payment activation has been performed.
+
+After inventory arrives, confirm actual colors and product photos, shipping and returns, business disclosures, and the live payment setup before enabling purchases. Reference photos currently come from TCEvolutions; no generated product imagery is used.
