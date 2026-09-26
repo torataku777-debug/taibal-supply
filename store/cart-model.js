@@ -7,7 +7,7 @@
   'use strict';
   const products = Object.freeze({
     lower: Object.freeze({ name: 'ローダメージ', range: '10〜120', price: 5480, image: 'https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_3.jpg?v=1742269932&width=400' }),
-    higher: Object.freeze({ name: 'ハイダメージ', range: '130〜240', price: 5480, image: 'https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=400' })
+    higher: Object.freeze({ name: 'ハイダメージ', range: '130〜240', price: 5480, image: (typeof document !== 'undefined' ? new URL('assets/higher/high_damage_counter_blue.png', document.currentScript.src).href : 'assets/higher/high_damage_counter_blue.png') })
   });
   const MAX_QUANTITY = 99;
   function quantity(value) {
