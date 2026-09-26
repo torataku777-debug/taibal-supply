@@ -158,7 +158,12 @@ footer{padding-block:48px 110px;background:#191919;color:#efede8}.footer-grid{di
  .shop-product-body .product-descriptor{font-size:12px;line-height:1.7;margin-top:10px;min-height:41px}
  .shop-product .product-disclosure{margin-top:10px}
  .shop-product .product-disclosure summary{font-size:12px;min-height:44px;padding-block:8px}
- .shop-product .product-bottom{display:block;margin:12px 0 10px;margin-top:auto;padding-top:12px}
+ .shop-product .product-heading{order:0}
+ .shop-product .product-descriptor{order:1}
+ .shop-product .product-bottom{order:2}
+ .shop-product .product-disclosure{order:3}
+ .shop-product .add-button{order:4}
+ .shop-product .product-bottom{display:block;margin:12px 0 10px;margin-top:0;padding-top:8px}
  .shop-product .price,.shop-product .reference-price>strong{font-size:23px;line-height:1.45;white-space:nowrap}
  .shop-product .price small,.shop-product .reference-price>strong>small{font-size:10px;margin-left:2px}
  .shop-product .reference-price>small{font-size:10px}
