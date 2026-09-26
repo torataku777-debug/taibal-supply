@@ -120,7 +120,8 @@
     if (!Number.isInteger(value) || value < 1 || value > model.MAX_QUANTITY) {
       input.value = cart[id]; announce('数量は1〜99の整数で入力してください。'); return;
     }
-    change(id,value,products[id].name+'の数量を変更しました。');
+    if (cart[id] !== value) { cart[id] = value; save(); render(true); }
+    announce(products[id].name+'の数量を変更しました。商品合計'+money(model.calculate(cart).total)+'。');
   });
   dialog.addEventListener('click',event=>{ if(event.target===dialog && event.clientX<dialog.getBoundingClientRect().left)dialog.close(); });
   dialog.addEventListener('close',()=>{document.body.classList.remove('cart-open');returnFocus?.focus();});

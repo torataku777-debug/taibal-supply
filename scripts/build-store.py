@@ -1,7 +1,7 @@
 from pathlib import Path
 from html import escape
 root=Path(__file__).resolve().parents[1]/'store'
-v='20260926-13'
+v='20260926-14'
 photos={
 'lower':'https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_3.jpg?v=1742269932&width=1200',
 'higher':'https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=1200',
