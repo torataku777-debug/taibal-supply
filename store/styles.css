@@ -180,3 +180,29 @@ footer{padding-block:48px 110px;background:#191919;color:#efede8}.footer-grid{di
  .product-detail>.detail-gallery .detail-photo{max-width:260px;margin-inline:auto}
  .product-detail>.detail-gallery .small{font-size:12px;line-height:1.8}
 }
+
+/* Clearly compare actual individual totals with bundle prices. */
+.bundle-price-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 10px;margin-top:8px}
+.bundle-price-row .bundle-original{flex-basis:100%;font-size:12px;line-height:1.6;color:#c8c0b5}
+.bundle-original s{text-decoration-thickness:1px;text-decoration-color:#d8c7ac}
+.bundle-price-row .bundle-discount{display:inline-block;background:#e9d6b3;color:#30271a;padding:3px 8px;font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap}
+@media(max-width:760px){
+ .bundle-offers{margin-top:32px;padding:22px 18px}
+ .bundle-offers-heading .eyebrow{margin-bottom:6px;font-size:11px}
+ .bundle-offers h3{font-size:21px;line-height:1.6}
+ .bundle-offers-heading>p:last-child{font-size:12px;line-height:1.7;margin-top:6px}
+ .bundle-offer-grid{gap:14px;margin-top:18px}
+ .bundle-offer-grid article{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;align-items:center}
+ .bundle-offer-grid article+article{padding-top:14px}
+ .bundle-offer-grid article>p:first-child{grid-column:1/-1;font-size:13px;line-height:1.6}
+ .bundle-price-row{grid-column:1/-1;gap:4px 9px;margin-top:5px}
+ .bundle-price-row .bundle-original{flex-basis:auto;font-size:11px}
+ .bundle-offer-grid .bundle-price-row strong{font-size:25px;line-height:1.5}
+ .bundle-offer-grid strong small{font-size:10px;margin-left:4px}
+ .bundle-price-row .bundle-discount{font-size:11px;padding:3px 6px}
+ .bundle-offer-grid .small{font-size:11px;line-height:1.6;margin-top:4px}
+ .bundle-offer-grid .bundle-cart{font-size:11px;min-height:44px;margin-top:3px;padding:8px 0;white-space:nowrap}
+ .bundle-offers-footer{margin-top:16px;padding-top:13px}
+ .bundle-offers-footer p{font-size:11px;line-height:1.7}
+ .bundle-offers-footer button{margin-top:5px;min-height:44px;font-size:12px;padding-block:8px}
+}
