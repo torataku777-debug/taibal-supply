@@ -263,3 +263,49 @@ footer{background:var(--black);color:#d7cfbf;padding:58px 0}
 }
 
 .card-actions-primary{margin-top:12px;margin-bottom:18px}
+
+/* First drop: put the actual products and the choice between sets up front. */
+.topbar{font-size:13px;letter-spacing:.03em}
+.nav nav{font-size:14px}
+.eyebrow{font-size:13px;letter-spacing:.1em}
+.hero-grid{min-height:590px;gap:40px}
+.hero-copy{padding:56px 0}
+.hero-copy h1{font-size:clamp(52px,6vw,78px)}
+.hero-copy p{font-size:16px;line-height:1.8}
+.hero-lead{font-size:22px!important}
+.hero-note{font-size:14px;color:#cfc5af}
+.button{font-size:15px}
+.hero-board{border:0;background:transparent;padding:0;box-shadow:none}
+.hero-real-grid{gap:8px}
+.hero-real-large{grid-column:auto}
+.hero-real img,.hero-real-large img{aspect-ratio:1/1}
+.hero-real figcaption{font-size:12px;padding:8px 10px}
+.image-note{font-size:12px;line-height:1.55;color:#c6baa5}
+.section{padding:78px 0}
+.section-intro,.card .desc,.contents-box ul,.select-grid span,.story-points p,.origin-timeline p,.flow-grid p,.faq p,.reason-grid p,.detail-content-box ul{font-size:15px}
+.card-cat,.en-name,.price span,.contents-box b,.spec,.badge,.official-photo-tag,.set-visual-summary,.detail-category,.detail-en,.detail-price span,.detail-chips span,.detail-official,.detail-summary,.detail-buybox p,.breadcrumb{font-size:13px}
+.card h3{font-size:30px}
+.price{font-size:27px}
+.product-lead{font-size:17px}
+.actual-product figcaption,.actual-product figcaption b,.detail-photo-grid figcaption{font-size:13px}
+.actual-product figcaption{align-items:flex-start}
+.actual-product figcaption b{line-height:1.35}
+.actual-product figcaption span{font-size:13px}
+.detail-link,.buy{font-size:15px}
+.flow-note,.footer-links{font-size:14px}
+.pill{font-size:13px}
+@media(max-width:900px){.hero-grid{min-height:0}.hero-copy{padding:45px 0 10px}}
+@media(max-width:580px){
+  .hero-copy h1{font-size:44px}
+  .hero-copy p{font-size:15px}
+  .hero-lead{font-size:18px!important}
+  .hero-actions .button{font-size:14px}
+  .hero-real figcaption{font-size:12px;min-height:60px;align-items:center}
+  .image-note{font-size:12px}
+  .card-media{padding:10px}
+  .card-body{padding:22px}
+  .card h3{font-size:26px}
+  .card-actions{grid-template-columns:1fr 1fr}
+  .mobile-buybar-info span{font-size:12px}
+  .mobile-buybar button{font-size:13px}
+}
