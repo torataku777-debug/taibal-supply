@@ -10,7 +10,7 @@
     higher: Object.freeze({ name: 'ハイダメージ', range: '130〜240', unit: '6個入り', price: 5480, image: (typeof document !== 'undefined' ? new URL('assets/higher/high_damage_counter_blue.png', document.currentScript.src).href : 'assets/higher/high_damage_counter_blue.png') }),
     ability: Object.freeze({ name: '特性使用済みマーカー', unit: '2個入り', price: 3280, image: 'https://cdn.shopify.com/s/files/1/0813/2188/6018/files/metal-pokemon-tcg-ability-markers-aluminum-us.jpg?v=1768006305&width=1200' }),
     condition: Object.freeze({ name: 'どく・やけどマーカー', unit: '各1個入り', price: 3280, image: 'https://cdn.shopify.com/s/files/1/0813/2188/6018/files/7B2783A1-62B4-43B6-96C0-BC7A64C24586.png?v=1782411405&width=1200' }),
-    case: Object.freeze({ name: '収納ケース', unit: 'ケース1個', price: 9480, image: 'https://cdn.shopify.com/s/files/1/0813/2188/6018/files/802EC6D9-BE73-4D0C-B43A-35C3DD17DD65.jpg?v=1744613641&width=1200' })
+    case: Object.freeze({ name: '収納ケース（仕切り付き）', unit: 'ケース＋専用仕切り 各1個', price: 10980, image: 'https://cdn.shopify.com/s/files/1/0813/2188/6018/files/802EC6D9-BE73-4D0C-B43A-35C3DD17DD65.jpg?v=1744613641&width=1200' })
   });
   const MAX_QUANTITY = 99;
   function quantity(value) {

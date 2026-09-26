@@ -17,9 +17,9 @@ const scenarios = [
   [{lower:2,higher:2,ability:1,condition:1},28480,2020,26460],
   [{lower:1,higher:1,ability:2,condition:2},24080,2120,21960],
   [{lower:2,higher:2,ability:2,condition:2},35040,3080,31960],
-  [{lower:1,higher:1,ability:1,condition:1,case:1},27000,1540,25460],
+  [{lower:1,higher:1,ability:1,condition:1,case:1},28500,1540,26960],
   [{lower:1,higher:1,ability:1},14240,480,13760],
-  [{case:2},18960,0,18960],
+  [{case:2},21960,0,21960],
 ];
 for(const [cart,subtotal,discount,total] of scenarios){
  const s=calculate(cart); assert.equal(s.subtotal,subtotal); assert.equal(s.discount,discount); assert.equal(s.total,total);
