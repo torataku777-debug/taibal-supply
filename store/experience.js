@@ -15,7 +15,7 @@
       reveal.unobserve(target);
     });
   }, {threshold:0.08});
-  document.querySelectorAll('.shop-product,.section-heading,.craft-copy,.craft-photo,.story-grid>div,.story-chapter,.story-counter-photo,.closing-section>.wrap,.detail-copy').forEach(el=>reveal.observe(el));
+  document.querySelectorAll('.shop-product,.section-heading,.craft-copy,.craft-photo,.story-grid>div,.story-chapter,.story-counter-photo,.story-editorial-photo,.closing-section>.wrap,.detail-copy').forEach(el=>reveal.observe(el));
   document.querySelectorAll('.hero-copy>*,.story-page>h1,.story-intro').forEach((el,i)=>animate(el,[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{duration:850,delay:Math.min(i,6)*70,easing:'ease-out',fill:'backwards'}));
   const moving = [...document.querySelectorAll('.hero-scene,.story-feature-photo img,.story-counter-photo img')];
   const progress = document.querySelector('.reading-progress span');
