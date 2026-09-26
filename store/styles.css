@@ -250,7 +250,7 @@ body{background:#f8f6f1;color:var(--ink)}
 .bundle-price-row .bundle-discount{background:linear-gradient(110deg,#dfcda8,#cbb58b);color:#302b20;box-shadow:inset 0 1px #fff5}
 .bundle-offers .small,.bundle-offers-footer p{color:#d1cbbf}
 .bundle-offer-grid article+article,.bundle-offers-footer{border-color:#c4b59030}
-.craft-section{background:#eeeae1}
+.craft-section{background:radial-gradient(ellipse at 20% 10%,#42423a,#252823 55%,#1b1e19)}
 .story-year{color:#b0a18a}
 .story-preview-photo img,.story-editorial-photo img{box-shadow:0 9px 23px -17px #31291d66}
 .story-chapters a[aria-current]{box-shadow:0 2px #9b8052}
@@ -260,7 +260,8 @@ body{background:#f8f6f1;color:var(--ink)}
 .cart-dialog,.cart-header,.cart-dock{background:#fcfbf7}
 .cart-dock{border-color:#d7cbb6;box-shadow:0 5px 25px #2c271b18}
 .cart-color-label select,.preorder-page select,.preorder-page input,.preorder-page textarea{background:#fffefa;border-color:#cfc5b4}
-footer{background:#efebe3;border-color:#d7cdbb}
+footer{background:#22251f;border-color:#b9a78033}
+footer .brand{color:#f3eee3}footer .brand span{color:#bfac88}footer .footer-links{color:#cdc5b5}
 a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,select:focus-visible{outline-color:#8b7042}
 @media(hover:hover){
  .button:hover,.detail-copy .preorder-link+.add-button:hover{background:linear-gradient(115deg,#48493c,#303428);border-color:#c0a677;color:#fffaf0}
