@@ -38,7 +38,7 @@
     $('[data-cart-empty]').hidden=Boolean(state.count);$('[data-cart-content]').hidden=!state.count;
     if(!preserveItems)$('[data-cart-items]').innerHTML=state.lines.map(line=>{
       const p=products[line.id],key=model.lineKey(line),name=model.lineName(line);
-      return `<article class="cart-item"><img src="${model.lineImage(line)}" alt="${name}" width="88" height="88"><div><h3>${p.name}</h3><p class="item-meta">${p.unit} / ${money(p.price)}（税込・予定）</p>${colorSelect(line)}<div class="cart-item-controls"><div class="quantity"><button data-change="${key}" data-delta="-1" aria-label="${name}を1点減らす">−</button><input type="number" inputmode="numeric" min="1" max="${model.MAX_QUANTITY}" step="1" value="${line.quantity}" data-quantity="${key}" aria-label="${name}の数量"><button data-change="${key}" data-delta="1" aria-label="${name}を1点増やす" ${cart[line.id]>=model.MAX_QUANTITY?'disabled':''}>＋</button></div><strong data-item-total="${key}">${money(p.price*line.quantity)}</strong></div><button class="remove-button" data-remove="${key}" aria-label="${name}をカートから削除">削除</button></div></article>`;
+      return `<article class="cart-item"><img src="${model.lineImage(line)}" alt="${name}" width="88" height="88"><div><h3>${p.name}</h3><p class="item-meta">${p.unit} / ${money(p.price)}（税込）</p>${colorSelect(line)}<div class="cart-item-controls"><div class="quantity"><button data-change="${key}" data-delta="-1" aria-label="${name}を1点減らす">−</button><input type="number" inputmode="numeric" min="1" max="${model.MAX_QUANTITY}" step="1" value="${line.quantity}" data-quantity="${key}" aria-label="${name}の数量"><button data-change="${key}" data-delta="1" aria-label="${name}を1点増やす" ${cart[line.id]>=model.MAX_QUANTITY?'disabled':''}>＋</button></div><strong data-item-total="${key}">${money(p.price*line.quantity)}</strong></div><button class="remove-button" data-remove="${key}" aria-label="${name}をカートから削除">削除</button></div></article>`;
     }).join('');
     state.lines.forEach(line=>{
       const key=model.lineKey(line),total=dialog.querySelector(`[data-item-total="${key}"]`),plus=dialog.querySelector(`[data-change="${key}"][data-delta="1"]`);
@@ -56,12 +56,31 @@
     const shipping=state.count && state.total<10000?350:0;
     if($('[data-shipping-estimate]'))$('[data-shipping-estimate]').textContent=shipping?money(shipping):'無料';
     if($('[data-estimated-total]'))$('[data-estimated-total]').textContent=money(state.total+shipping);
-    $('[data-checkout]').hidden=true;$('[data-checkout]').removeAttribute('href');$('[data-launch-note]').hidden=false;
     const unselected=state.lines.some(l=>model.hasColors(l.id)&&!l.color);
-    $('[data-checkout-status]').hidden=!unselected&&!test;
-    $('[data-checkout-status]').textContent=unselected?'カラー未選択の商品があります。各商品のカラーを選んでください。':test?'カラーを含む注文受付は準備中です。':'';
+    const checkout=model.checkoutLinesUrl(lines,cfg,test),button=$('[data-checkout]');
+    button.hidden=!checkout;
+    if(checkout)button.href=checkout;else button.removeAttribute('href');
+    $('[data-launch-note]').hidden=false;
+    $('[data-launch-note] span').textContent=checkout
+      ?'予約商品です。決済完了で注文を受け付け、入荷・検品後に発送します。発売時期は変更になる場合があります。'
+      :'カートに入れただけでは注文は確定しません。';
+    const colorSummary=state.lines.filter(l=>model.hasColors(l.id)).map(model.lineName).join('、');
+    $('[data-checkout-status]').hidden=!state.count;
+    $('[data-checkout-status]').textContent=unselected
+      ?'カラー未選択の商品があります。各商品のカラーを選んでください。'
+      :checkout
+        ?(colorSummary?'選択中：'+colorSummary+'。決済画面でも同じカラーを選択してください。決済画面で選んだカラーが注文内容になります。':'商品・数量・送料を確認して、予約決済へお進みください。')
+        :'この数量・組み合わせのオンライン決済は準備中です。商品を分けて決済すると送料・割引が変わるため、ご注文内容はお問い合わせください。';
   }
   function commit(message,preserve=false){lines=model.normalizeLines(lines);save();render(preserve);if(message)announce(message+' 商品合計'+money(model.calculateLines(lines).total)+'。');}
+  document.addEventListener('taibal:add-selection',event=>{
+    const {id,color,quantity}=event.detail||{};
+    if(!Object.hasOwn(products,id)||!Number.isInteger(quantity)||quantity<1||quantity>model.MAX_QUANTITY)return;
+    if(model.hasColors(id)&&!Object.hasOwn(model.colors,color))return;
+    if(model.calculateLines(lines).cart[id]+quantity>model.MAX_QUANTITY){announce('1種類につき全カラー合計99点まで追加できます。');return;}
+    lines=model.addLine(lines,id,color,quantity);commit('商品をカートに追加しました。');
+    returnFocus=document.activeElement;dialog.showModal();document.body.classList.add('cart-open');
+  });
   function find(key){return lines.find(line=>model.lineKey(line)===key);}
   function selectedColor(id,target){
     if(!model.hasColors(id)||dialog.contains(target))return '';

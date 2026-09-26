@@ -39,6 +39,11 @@
   // Never send a larger cart to a link which would charge for fewer goods.
   function checkoutKey(raw) {
     const cart = normalize(raw);
+    if (cart.lower===0 && cart.higher===0 && cart.ability===1 && cart.condition===0 && cart.case===0) return 'ability';
+    if (cart.lower===0 && cart.higher===0 && cart.ability===0 && cart.condition===1 && cart.case===0) return 'condition';
+    if (cart.lower===0 && cart.higher===0 && cart.ability===0 && cart.condition===0 && cart.case===1) return 'case';
+    if (cart.lower===0 && cart.higher===0 && cart.ability===1 && cart.condition===1 && cart.case===0) return 'markerPair';
+    if (cart.lower===1 && cart.higher===1 && cart.ability===1 && cart.condition===1 && cart.case===0) return 'tournamentFull';
     if (cart.ability || cart.condition || cart.case) return null;
     if (cart.lower === 1 && cart.higher === 0) return 'lower';
     if (cart.lower === 0 && cart.higher === 1) return 'higher';
@@ -99,7 +104,18 @@
   function lineName(line) {
     return products[line.id].name+(hasColors(line.id)?'・'+(colors[line.color]||'カラー未選択'):'');
   }
-  // Existing Payment Links do not carry line-item colors. Keep variant checkout closed.
-  function checkoutLinesUrl() { return null; }
+  // Each link charges for exactly the matched cart. Stripe custom fields confirm the final colors.
+  function checkoutLinesUrl(raw, cfg, test=false) {
+    const state=calculateLines(raw);
+    if (!state.count || state.lines.some(line=>hasColors(line.id)&&!line.color)) return null;
+    const base=checkoutUrl(state.cart,cfg,test);
+    if (!base) return null;
+    const url=new URL(base);
+    url.searchParams.set('locale','ja');
+    const reference='tce_'+state.lines.map(line=>line.id+'_'+(line.color||'standard')+'_'+line.quantity).join('__');
+    if(reference.length>200) return null;
+    url.searchParams.set('client_reference_id',reference);
+    return url.href;
+  }
   return Object.freeze({ products, MAX_QUANTITY, normalize, calculate, checkoutKey, checkoutUrl, colors, hasColors, lineKey, normalizeLines, calculateLines, addLine, setLineQuantity, setLineColor, lineImage, lineName, checkoutLinesUrl });
 });
