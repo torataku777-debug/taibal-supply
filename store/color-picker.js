@@ -1,14 +1,14 @@
 (() => {
   'use strict';
   const picker = document.querySelector('.color-picker');
-  const photo = document.querySelector('.detail-photo .higher-color-image');
+  const photo = document.querySelector('.detail-photo .product-color-image');
   if (!picker || !photo) return;
   const name = picker.querySelector('[data-color-name]');
   const status = picker.querySelector('[data-color-status]');
   let revision = 0;
   picker.addEventListener('change', event => {
     const input = event.target;
-    if (!input.matches('input[name="higher-color"]')) return;
+    if (!input.matches('input[name="product-color"]')) return;
     const current = ++revision;
     const label = input.dataset.colorLabel;
     name.textContent = label;
@@ -18,7 +18,7 @@
     image.onload = () => {
       if (current !== revision) return;
       photo.src = image.src;
-      photo.alt = 'ハイダメージ・' + label + 'のカラーイメージ';
+      photo.alt = photo.dataset.productName + '・' + label + 'のカラーイメージ';
       photo.removeAttribute('aria-busy');
       status.textContent = '';
     };
