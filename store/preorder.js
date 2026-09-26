@@ -14,10 +14,12 @@
     if ([...select.options].some(o => o.value === params.get(name))) select.value = params.get(name);
   }
   function update() {
-    const known = ['lower','higher'].includes(form.elements.product.value);
+    const id = form.elements.product.value;
+    const known = ['lower','higher'].includes(id);
+    const product = window.TaibalCart.products[id];
     form.querySelector('[data-preorder-color]').hidden = !known;
     const qty = Number(form.elements.quantity.value);
-    form.querySelector('[data-preorder-total]').textContent = !known ? '価格・販売単位は準備中です。' : Number.isInteger(qty) && qty >= 1 && qty <= 99 ? '商品小計：¥' + (5480 * qty).toLocaleString('ja-JP') + '（税込・送料別）' : '数量は1〜99で入力してください。';
+    form.querySelector('[data-preorder-total]').textContent = !product ? '商品を選択してください。' : Number.isInteger(qty) && qty >= 1 && qty <= 99 ? '商品小計：¥' + (product.price * qty).toLocaleString('ja-JP') + '（税込・販売予定価格・送料別）' : '数量は1〜99で入力してください。';
   }
   form.addEventListener('submit', event => event.preventDefault());
   form.addEventListener('input', update);

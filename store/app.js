@@ -43,7 +43,7 @@
     $('[data-cart-content]').hidden = !state.count;
     if (!preserveItems) $('[data-cart-items]').innerHTML = Object.entries(cart).filter(([,q]) => q > 0).map(([id,q]) => {
       const p = products[id];
-      return `<article class="cart-item"><img src="${p.image}" alt="${p.name}" width="88" height="88"><div><h3>${p.name}</h3><p class="item-meta">6個入り / ${money(p.price)}（税込）</p><div class="cart-item-controls"><div class="quantity"><button data-change="${id}" data-delta="-1" aria-label="${p.name}を1点減らす">−</button><input type="number" inputmode="numeric" min="1" max="${model.MAX_QUANTITY}" step="1" value="${q}" data-quantity="${id}" aria-label="${p.name}の数量"><button data-change="${id}" data-delta="1" aria-label="${p.name}を1点増やす" ${q >= model.MAX_QUANTITY ? 'disabled' : ''}>＋</button></div><strong class="item-total" data-item-total="${id}">${money(p.price*q)}</strong></div><button class="remove-button" data-remove="${id}" aria-label="${p.name}をカートから削除">削除</button></div></article>`;
+      return `<article class="cart-item"><img src="${p.image}" alt="${p.name}" width="88" height="88"><div><h3>${p.name}</h3><p class="item-meta">${p.unit} / ${money(p.price)}（税込・予定）</p><div class="cart-item-controls"><div class="quantity"><button data-change="${id}" data-delta="-1" aria-label="${p.name}を1点減らす">−</button><input type="number" inputmode="numeric" min="1" max="${model.MAX_QUANTITY}" step="1" value="${q}" data-quantity="${id}" aria-label="${p.name}の数量"><button data-change="${id}" data-delta="1" aria-label="${p.name}を1点増やす" ${q >= model.MAX_QUANTITY ? 'disabled' : ''}>＋</button></div><strong class="item-total" data-item-total="${id}">${money(p.price*q)}</strong></div><button class="remove-button" data-remove="${id}" aria-label="${p.name}をカートから削除">削除</button></div></article>`;
     }).join('');
     for (const id of Object.keys(products)) {
       const total = dialog.querySelector(`[data-item-total="${id}"]`);
@@ -53,12 +53,15 @@
     }
     const missing = cart.lower > cart.higher ? 'higher' : cart.higher > cart.lower ? 'lower' : null;
     const offer = $('[data-cart-offer]');
-    const active = state.discount ? `<strong>まとめ買い割引 −${money(state.discount)}</strong><p>ローダメージ＋ハイダメージ ${state.pairs}組に適用しました。</p>` : '<strong>2種類を一緒に選ぶと、480円引き。</strong><p>ローダメージ・ハイダメージ各1点で適用されます。同じ種類だけの購入は対象外です。</p>';
-    offer.innerHTML = active + (missing ? `<button data-add="${missing}">${products[missing].name}を1点追加（${money(products[missing].price)}）</button><p>追加すると${state.discount ? 'さらに' : ''}480円引きになります。</p>` : '');
+    const active = state.discount ? `<strong>まとめ買い割引 −${money(state.discount)}</strong><p>${state.discounts.map(d=>`${d.label} ${d.count}組：−${money(d.amount)}`).join('<br>')}</p>` : '<strong>組み合わせに応じて、自動で割引。</strong><p>ロー＋ハイは480円引き。マーカー2種類は580円引き。4種類を揃えるとさらに480円引き。</p>';
+    let suggestions = missing ? `<button data-add="${missing}">${products[missing].name}を1点追加（${money(products[missing].price)}）</button><p>ロー＋ハイの割引が480円増えます。</p>` : '';
+    const markerMissing = cart.ability > cart.condition ? 'condition' : cart.condition > cart.ability ? 'ability' : null;
+    if(markerMissing) suggestions += `<button data-add="${markerMissing}">${products[markerMissing].name}を1点追加（${money(products[markerMissing].price)}）</button><p>マーカー2種類の割引が580円増えます。</p>`;
+    offer.innerHTML = active + suggestions;
     $('[data-subtotal]').textContent = money(state.subtotal);
     $('[data-discount-row]').hidden = !state.discount;
     $('[data-discount]').textContent = '−' + money(state.discount);
-    $('[data-pairs]').textContent = `${state.pairs}組 × 480円`;
+    $('[data-pairs]').textContent = '組み合わせに応じて自動適用';
     $('[data-total]').textContent = money(state.total);
     const url = model.checkoutUrl(cart, cfg, test);
     const checkout = $('[data-checkout]');
@@ -68,7 +71,7 @@
     $('[data-launch-note]').hidden = Boolean(url && !test);
     const status = $('[data-checkout-status]');
     status.hidden = !test && !(cfg.mode === 'live' && cfg.enabled);
-    status.textContent = url ? (test ? '表示中の商品と金額でテスト決済を開きます。' : '') : (test ? 'この数量のテスト決済は準備中です。単品1点、または2種類各1点で確認できます。' : 'この組み合わせの購入受付は準備中です。');
+    status.textContent = url ? (test ? '表示中の商品と金額でテスト決済を開きます。' : '') : (test ? 'この数量のテスト決済は準備中です。ダメージカウンター単品1点、またはロー・ハイ各1点のみ対応しています。' : 'この組み合わせの購入受付は準備中です。');
   }
   function change(id, value, message) {
     if (!Object.hasOwn(products, id)) return;

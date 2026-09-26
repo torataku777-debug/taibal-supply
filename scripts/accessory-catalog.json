@@ -27,7 +27,8 @@
       "Fire Red",
       "Sky Blue",
       "Electric Gold"
-    ]
+    ],
+    "planned_jpy": 3280
   },
   "condition": {
     "source": "https://tcevolutions.com/products/cnc-machined-aluminum-tcg-condition-marker-burn-poison",
@@ -40,7 +41,8 @@
     ],
     "colors": [
       "Default Title"
-    ]
+    ],
+    "planned_jpy": 3280
   },
   "case": {
     "source": "https://tcevolutions.com/products/master-trainer-series-2-tone-dice-box",
@@ -68,6 +70,7 @@
       "Black/Purple",
       "Black/Red",
       "Black/Sky Blue"
-    ]
+    ],
+    "planned_jpy": 9480
   }
 }
