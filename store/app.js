@@ -1,139 +1,33 @@
-const officialImages={
-  lower:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_3.jpg?v=1742269932&width=1200",
-  higher:"https://tcevolutions.com/cdn/shop/files/Damage_Counter_Dice_TCEVOLUTIONS_2.jpg?v=1742347748&width=1200",
-  ability:"https://tcevolutions.com/cdn/shop/files/bk-closeup-metal-pokemon-tcg-markers-aluminum-us.jpg?v=1768006715&width=1200",
-  condition:"https://tcevolutions.com/cdn/shop/files/7B2783A1-62B4-43B6-96C0-BC7A64C24586.png?v=1782411405&width=1200"
-};
-
-const recommendedProducts=[
-  {
-    id:"damageFull",detailUrl:"./products/damage-full.html",
-    jpName:"ダメージカウンター フルセット",
-    enName:"Damage Counter Full Set",
-    price:"¥10,480",
-    cat:"まず最初におすすめ",
-    lead:"10〜240までを、これひとつで。",
-    desc:"LowerとHigherをまとめた、TCEを初めて使う方におすすめの基本セット。",
-    contents:[
-      "ローダメージ ダメージカウンターセット × 1（6個）",
-      "ハイダメージ ダメージカウンターセット × 1（6個）",
-      "合計12個"
-    ],
-    specs:["10〜240対応","12個セット","Lower + Higher"],
-    visualSummary:"Lower 6個 + Higher 6個 = 合計12個",
-    media:[
-      {src:officialImages.lower,label:"ローダメージ",count:"6個"},
-      {src:officialImages.higher,label:"ハイダメージ",count:"6個"}
-    ]
-  },
-  {
-    id:"tournamentFull",detailUrl:"./products/tournament-full.html",
-    jpName:"トーナメント フルキット",
-    enName:"Tournament Full Kit",
-    price:"¥15,980",
-    cat:"競技プレイヤー向け",
-    lead:"競技プレイに必要な盤面管理を、まとめて一式。",
-    desc:"ダメージ管理だけでなく、Ability Used、Burn / Poisonまでまとめて揃えられるフルキット。",
-    contents:[
-      "ローダメージ ダメージカウンターセット × 1（6個）",
-      "ハイダメージ ダメージカウンターセット × 1（6個）",
-      "Ability Used Marker Set × 1（2枚）",
-      "Burn & Poison Marker Set × 1（2枚）"
-    ],
-    specs:["Damage","Ability Used","Burn / Poison"],
-    visualSummary:"Lower 6個 + Higher 6個 + Ability 2枚 + Burn / Poison 2枚",
-    media:[
-      {src:officialImages.lower,label:"ローダメージ",count:"6個"},
-      {src:officialImages.higher,label:"ハイダメージ",count:"6個"},
-      {src:officialImages.ability,label:"Ability Used",count:"2枚"},
-      {src:officialImages.condition,label:"Burn & Poison",count:"2枚"}
-    ]
+(() => {
+  const cfg = window.TAIBAL_CHECKOUT || {};
+  const test = cfg.mode === 'test' && new URLSearchParams(location.search).get('test') === '1';
+  if (test) {
+    const notice = document.createElement('div');
+    notice.className = 'test-notice';
+    notice.textContent = 'テスト決済モード：実際の注文・請求は発生しません。';
+    document.body.prepend(notice);
+    document.querySelectorAll('[data-test-link]').forEach(a => {
+      const url = new URL(a.href);
+      if (url.origin === location.origin) {
+        url.searchParams.set('test', '1');
+        a.href = url.href;
+      }
+    });
   }
-];
-
-const singleProducts=[
-  {
-    id:"lower",detailUrl:"./products/lower.html",
-    jpName:"ローダメージ ダメージカウンターセット",
-    enName:"Lower Numeric Damage Counter Set",
-    price:"¥5,480",
-    cat:"単品 / 低ダメージ帯",
-    lead:"10〜120のダメージ管理を、より見やすく。",
-    desc:"10〜120のダメージ帯を管理するNumeric Damage Counter 6個セット。",
-    contents:[
-      "10〜60用 12mmカウンター × 4",
-      "70〜120用 13mmカウンター × 2",
-      "合計6個"
-    ],
-    specs:["10〜120対応","6個セット","CNC加工アルミ"],
-    visualSummary:"10〜120対応 / 6個セット",
-    media:[{src:officialImages.lower,label:"ローダメージ",count:"6個"}]
-  },
-  {
-    id:"higher",detailUrl:"./products/higher.html",
-    jpName:"ハイダメージ ダメージカウンターセット",
-    enName:"Higher Numeric Damage Counter Set",
-    price:"¥5,480",
-    cat:"単品 / 高ダメージ帯",
-    lead:"130〜240の高ダメージ帯にも、スマートに対応。",
-    desc:"130〜240の高ダメージ帯を管理するNumeric Damage Counter 6個セット。",
-    contents:[
-      "130〜180用 13mmカウンター × 4",
-      "190〜240用 14mmカウンター × 2",
-      "合計6個"
-    ],
-    specs:["130〜240対応","6個セット","6061-T6アルミ"],
-    visualSummary:"130〜240対応 / 6個セット",
-    media:[{src:officialImages.higher,label:"ハイダメージ",count:"6個"}]
-  }
-];
-
-const cfg=window.TAIBAL_CHECKOUT||{};
-const testMode=cfg.mode==="test" && new URLSearchParams(location.search).get("test")==="1";
-const checkoutEnabled=cfg.enabled===true || testMode;
-
-function renderMedia(media){
-  const cls=media.length===1?"actual-product-grid single":media.length===2?"actual-product-grid double":"actual-product-grid quad";
-  return `<div class="${cls}">${media.map(m=>`
-    <figure class="actual-product">
-      <div class="actual-image-wrap"><img src="${m.src}" alt="TCEvolutions公式写真：${m.label}"></div>
-      <figcaption><b>${m.label}</b><span>${m.count}</span></figcaption>
-    </figure>`).join("")}</div>`;
-}
-
-function renderProduct(p){
-  const hasLink=Boolean(cfg[p.id]);
-  const enabled=checkoutEnabled && hasLink;
-  const buttonLabel=testMode&&hasLink?"テスト決済へ":"購入する";
-  return `<article class="card shop-card">
-    <div class="card-media precise-media">
-      ${renderMedia(p.media)}
-      <span class="badge">${testMode?"テスト環境":"10月入荷予定"}</span>
-    </div>
-    <div class="card-body">
-      <div class="card-cat">${p.cat}</div>
-      <h3>${p.jpName}</h3>
-      <p class="product-lead">${p.lead}</p>
-      <div class="price">${p.price}<span>税込</span></div>
-      <div class="contents-box">
-        <b>入っているもの</b>
-        <ul>${p.contents.map(x=>`<li>${x}</li>`).join("")}</ul>
-      </div>
-      <div class="card-actions card-actions-primary ${enabled?"":"prelaunch"}">
-        <a class="detail-link" href="${p.detailUrl}${testMode?"?test=1":""}">商品内容を詳しく見る <span aria-hidden="true">→</span></a>
-        ${enabled?`<button class="buy" data-id="${p.id}">${buttonLabel}</button>`:""}
-      </div>
-      ${enabled?"":'<p class="availability">カラー・発売日は入荷確認後にご案内します。</p>'}
-    </div>
-  </article>`;
-}
-
-document.querySelector("#recommended-grid").innerHTML=recommendedProducts.map(renderProduct).join("");
-document.querySelector("#single-grid").innerHTML=singleProducts.map(renderProduct).join("");
-
-document.addEventListener("click",e=>{
-  const b=e.target.closest(".buy");
-  if(!b||b.disabled)return;
-  const u=cfg[b.dataset.id];
-  if(u)location.href=u;
-});
+  document.querySelectorAll('.js-buy').forEach(button => {
+    const value = cfg[button.dataset.id];
+    let valid = false;
+    try {
+      const url = new URL(value);
+      const isTest = url.pathname.startsWith('/test_');
+      valid = url.protocol === 'https:' && url.hostname === 'buy.stripe.com' &&
+        ((test && isTest) || (cfg.mode === 'live' && cfg.enabled === true && !isTest));
+    } catch {}
+    button.hidden = !valid;
+    button.disabled = !valid;
+    if (!valid) return;
+    button.textContent = test ? 'テスト決済へ' : '購入手続きへ';
+    if (!test) button.parentElement.querySelector('.launch-note')?.remove();
+    button.addEventListener('click', () => { location.href = value; });
+  });
+})();
