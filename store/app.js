@@ -62,7 +62,7 @@
     if(checkout)button.href=checkout;else button.removeAttribute('href');
     $('[data-launch-note]').hidden=false;
     $('[data-launch-note] span').textContent=checkout
-      ?'予約商品です。決済完了で注文を受け付け、入荷・検品後に発送します。発売時期は変更になる場合があります。'
+      ?'予約商品です。決済完了で注文を受け付け、入荷・検品後に発送します。入荷・配送状況により、お届け時期が前後する場合があります。'
       :'カートに入れただけでは注文は確定しません。';
     const colorSummary=state.lines.filter(l=>model.hasColors(l.id)).map(model.lineName).join('、');
     $('[data-checkout-status]').hidden=!state.count;
