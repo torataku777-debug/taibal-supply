@@ -46,10 +46,10 @@
       if(plus)plus.disabled=cart[line.id]>=model.MAX_QUANTITY;
     });
     const missing=cart.lower>cart.higher?'higher':cart.higher>cart.lower?'lower':null;
-    const active=state.discount?`<strong>まとめ買い割引 −${money(state.discount)}</strong><p>${state.discounts.map(d=>`${d.label} ${d.count}組：−${money(d.amount)}`).join('<br>')}</p>`:'<strong>組み合わせに応じて、自動で割引。</strong><p>ロー＋ハイは480円引き。マーカー2種類は580円引き。4種類を揃えるとさらに480円引き。</p>';
+    const active=state.discount?`<strong>まとめ買い割引 −${money(state.discount)}</strong><p>${state.discounts.map(d=>`${d.label} ${d.count}組：−${money(d.amount)}`).join('<br>')}</p>`:'<strong>初回予約価格から、さらにセット割引。</strong><p>ロー＋ハイは480円引き。マーカー2種類は480円引き。4種類を揃えるとさらに980円引き。ケースまで揃えると合計19,800円。</p>';
     let suggestions=missing?`<button data-add="${missing}">${products[missing].name}を1点追加（${money(products[missing].price)}）</button><p>ロー＋ハイの割引が480円増えます。追加後にカラーを選べます。</p>`:'';
     const markerMissing=cart.ability>cart.condition?'condition':cart.condition>cart.ability?'ability':null;
-    if(markerMissing)suggestions+=`<button data-add="${markerMissing}">${products[markerMissing].name}を1点追加（${money(products[markerMissing].price)}）</button><p>マーカー2種類の割引が580円増えます。</p>`;
+    if(markerMissing)suggestions+=`<button data-add="${markerMissing}">${products[markerMissing].name}を1点追加（${money(products[markerMissing].price)}）</button><p>マーカー2種類の割引が480円増えます。</p>`;
     $('[data-cart-offer]').innerHTML=active+suggestions;
     $('[data-subtotal]').textContent=money(state.subtotal);$('[data-discount-row]').hidden=!state.discount;$('[data-discount]').textContent='−'+money(state.discount);
     $('[data-pairs]').textContent='カラーが異なる組み合わせも対象';$('[data-total]').textContent=money(state.total);
@@ -112,7 +112,7 @@
       if(cart.lower>=model.MAX_QUANTITY||cart.higher>=model.MAX_QUANTITY){announce('1種類につき全カラー合計99点まで追加できます。');return;}
       lines=model.addLine(model.addLine(lines,'lower'),'higher');commit('ロー・ハイを各1点追加しました。カートでカラーを選べます。');
      }else if(target.matches('[data-add-bundle]')){
-      const bundles={damage:['lower','higher'],marker:['ability','condition'],tournament:['lower','higher','ability','condition']};
+      const bundles={damage:['lower','higher'],marker:['ability','condition'],tournament:['lower','higher','ability','condition'],complete:['lower','higher','ability','condition','case']};
       const ids=bundles[target.dataset.addBundle];if(!ids)return;
       const cart=model.calculateLines(lines).cart;
       if(ids.some(id=>cart[id]>=model.MAX_QUANTITY)){announce('1種類につき全カラー合計99点まで追加できます。');return;}
@@ -144,3 +144,4 @@
   addEventListener('storage',e=>{if(e.key===storageKey||e.key===null){lines=readCart();render();}});
   render();
 })();
+

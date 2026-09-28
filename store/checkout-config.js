@@ -8,5 +8,6 @@ window.TAIBAL_CHECKOUT = {
   "ability": "https://buy.stripe.com/3cIeV69LQ1iYeBqfngbQY05",
   "condition": "https://buy.stripe.com/5kQ9AM7DIbXC78Y3EybQY06",
   "case": "https://buy.stripe.com/4gM8wI2jobXC3WM5MGbQY07",
-  "markerPair": "https://buy.stripe.com/6oUfZagaef9O0KA1wqbQY08"
+  "markerPair": "https://buy.stripe.com/6oUfZagaef9O0KA1wqbQY08",
+  "complete": "https://buy.stripe.com/28EfZa3ns3r664UgrkbQY09"
 };
