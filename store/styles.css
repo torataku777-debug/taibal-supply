@@ -269,3 +269,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,s
  .shop-photo:hover{box-shadow:inset 0 0 0 1px #a5916b30,0 8px 20px -13px #30271b55}
  .detail-link:hover,.nav nav a:hover{color:#806747;opacity:1}
 }
+
+/* Reservation launch: preserve existing hero and catalog geometry. */
+.reservation-guide{display:grid;grid-template-columns:1fr 1.2fr;gap:48px;padding-top:38px;padding-bottom:38px;border-bottom:1px solid #d9d4cb}.reservation-guide h2{font-size:clamp(24px,3vw,34px);margin:8px 0 14px}.reservation-guide p{font-size:13px;line-height:1.8;color:#655f55;margin:0}.reservation-steps{display:grid;gap:14px}.reservation-steps p strong{display:block;color:#27231f;font-size:14px}.reservation-steps p span{display:block}.checkout-help{display:block;margin:14px 0;padding:12px 16px;background:#eee9df;color:#27231f;text-align:center;border-radius:4px;font-weight:600}.checkout-help[hidden]{display:none}.preorder-scope{font-size:12px;line-height:1.8;margin:12px 0;color:#655f55}.legal-copy{max-width:800px}.legal-copy h2{font-size:21px;margin:32px 0 12px}.legal-copy p{line-height:1.9}.legal-copy h1{font-size:clamp(24px,4vw,36px)}@media(max-width:700px){.reservation-guide{grid-template-columns:1fr;gap:18px;padding-top:25px;padding-bottom:25px}.reservation-guide h2{font-size:24px}.reservation-steps{gap:12px}.reservation-guide p{font-size:12px}}

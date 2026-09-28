@@ -62,15 +62,21 @@
     if(checkout)button.href=checkout;else button.removeAttribute('href');
     $('[data-launch-note]').hidden=false;
     $('[data-launch-note] span').textContent=checkout
-      ?'予約商品です。決済完了で注文を受け付け、入荷・検品後に発送します。入荷・配送状況により、お届け時期が前後する場合があります。'
+      ?'予約商品です。ご注文時に全額をお支払いいただき、2026年11月1日以降、入荷・検品後に順次発送予定です。入荷・配送状況により、お届け時期が前後する場合があります。'
       :'カートに入れただけでは注文は確定しません。';
+    const help=$('[data-checkout-help]');
+    if(help){
+      help.hidden=!state.count || Boolean(checkout) || unselected;
+      const body='希望する予約商品：\n'+state.lines.map(line=>model.lineName(line)+' × '+line.quantity).join('\n')+'\n\n掲載価格に基づく商品合計：'+money(state.total)+'（税込）\n予約条件・送料・お支払い方法の案内を希望します。\n※このメールは問い合わせです。送信だけでは注文は確定しません。';
+      help.href='mailto:torataku777@gmail.com?subject='+encodeURIComponent('TCEvolutions 予約注文のご相談')+'&body='+encodeURIComponent(body);
+    }
     const colorSummary=state.lines.filter(l=>model.hasColors(l.id)).map(model.lineName).join('、');
     $('[data-checkout-status]').hidden=!state.count;
     $('[data-checkout-status]').textContent=unselected
       ?'カラー未選択の商品があります。各商品のカラーを選んでください。'
       :checkout
         ?(colorSummary?'選択中：'+colorSummary+'。決済画面でも同じカラーを選択してください。決済画面で選んだカラーが注文内容になります。':'商品・数量・送料を確認して、予約決済へお進みください。')
-        :'この数量・組み合わせのオンライン決済は準備中です。商品を分けて決済すると送料・割引が変わるため、ご注文内容はお問い合わせください。';
+        :'この数量・組み合わせは個別にご案内します。下の「この内容で相談する」からお問い合わせください。メールを送っただけでは注文・決済は確定しません。';
   }
   function commit(message,preserve=false){lines=model.normalizeLines(lines);save();render(preserve);if(message)announce(message+' 商品合計'+money(model.calculateLines(lines).total)+'。');}
   document.addEventListener('taibal:add-selection',event=>{
